@@ -1,4 +1,7 @@
 
+using BookshelfManager.Models;
+using Microsoft.EntityFrameworkCore;
+
 namespace BookshelfManager
 {
     public class Program
@@ -13,6 +16,14 @@ namespace BookshelfManager
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddDbContext<LibraryContext>(option =>
+            {
+                var connectionString = builder.Configuration.GetConnectionString("MySql");
+                option.UseMySQL(connectionString);
+            });
+
+
+
 
             var app = builder.Build();
 
