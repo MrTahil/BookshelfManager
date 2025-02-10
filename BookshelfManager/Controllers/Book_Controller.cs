@@ -42,7 +42,7 @@ namespace BookshelfManager.Controllers
                 if (list != null) {
                     return StatusCode(418, list);
                 }
-                else { BadRequest()}
+                else {return BadRequest(); }
             }
             catch (Exception)
             {
