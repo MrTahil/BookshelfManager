@@ -50,5 +50,18 @@ namespace BookshelfManager.Controllers
                 throw;
             }
         }
+
+
+        [HttpDelete("DeleteById{Id}")]
+        public async Task<ActionResult<Book>> DeleteBookById(int id)
+        {
+            var valami = await _context.Books.FirstOrDefaultAsync(x => x.Id == id);
+            if (valami != null)
+            {
+                _context.Books.Remove(valami);
+                await _context.SaveChangesAsync();
+            }
+            return BadRequest();
+        }
     }
 }
