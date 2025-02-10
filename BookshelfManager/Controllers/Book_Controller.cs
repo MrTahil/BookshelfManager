@@ -1,4 +1,5 @@
 ﻿using BookshelfManager.Models;
+using BookshelfManager.Modelsűusing;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -60,10 +61,29 @@ namespace BookshelfManager.Controllers
             {
                 _context.Books.Remove(valami);
                 await _context.SaveChangesAsync();
+                return StatusCode(418, valami);
             }
             return BadRequest();
         }
 
+        [HttpPost("CreateBook")]
+        public async Task<ActionResult<Book>> CreateBook(CreateBookDto crtdto)
+        {
+            var valami = new Book
+            {
+                Author = crtdto.Author,
+                Price = crtdto.Price,
+                PublishedYear = crtdto.PublishedYear,
+                Genre = crtdto.Genre,
+                Title = crtdto.Title
 
+            };
+            if (valami != null) { 
+            _context.Books.Add(valami);
+                await _context.SaveChangesAsync();
+                return StatusCode(418,valami);
+            }
+            return BadRequest();
+        }
     }
 }
