@@ -35,11 +35,11 @@ namespace BookshelfManager.Controllers
 
 
         [HttpGet("GetBookById{Id}")]
-        public async Task<ActionResult<Book>> GetBookById(int id)
+        public async Task<ActionResult<Book>> GetBookById(int Id)
         {
             try
             {
-                var list = await _context.Books.Where(x => x.Id == id).ToListAsync();
+                var list = await _context.Books.Where(x => x.Id == Id).ToListAsync();
                 if (list != null) {
                     return StatusCode(418, list);
                 }
@@ -54,9 +54,9 @@ namespace BookshelfManager.Controllers
 
 
         [HttpDelete("DeleteById/{Id}")]
-        public async Task<ActionResult<Book>> DeleteBookById(int id)
+        public async Task<ActionResult<Book>> DeleteBookById(int Id)
         {
-            var valami = await _context.Books.FirstOrDefaultAsync(x => x.Id == id);
+            var valami = await _context.Books.FirstOrDefaultAsync(x => x.Id == Id);
             if (valami != null)
             {
                 _context.Books.Remove(valami);
@@ -87,9 +87,9 @@ namespace BookshelfManager.Controllers
         }
 
         [HttpPost("EditBookById/{Id}")]
-        public async Task<ActionResult<Book>> EditBook(int id,EditBook eddto)
+        public async Task<ActionResult<Book>> EditBook(int Id,EditBook eddto)
         {
-            var valami = await _context.Books.FirstOrDefaultAsync(x => x.Id ==id) ;
+            var valami = await _context.Books.FirstOrDefaultAsync(x => x.Id ==Id) ;
             if (valami != null) { 
             valami.Author = eddto.Author;
             valami.Price = eddto.Price;
