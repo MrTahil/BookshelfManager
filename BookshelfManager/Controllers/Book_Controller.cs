@@ -53,7 +53,7 @@ namespace BookshelfManager.Controllers
         }
 
 
-        [HttpDelete("DeleteById{Id}")]
+        [HttpDelete("DeleteById/{Id}")]
         public async Task<ActionResult<Book>> DeleteBookById(int id)
         {
             var valami = await _context.Books.FirstOrDefaultAsync(x => x.Id == id);
@@ -84,6 +84,25 @@ namespace BookshelfManager.Controllers
                 return StatusCode(418,valami);
             }
             return BadRequest();
+        }
+
+        [HttpPost("EditBookById/{Id}")]
+        public async Task<ActionResult<Book>> EditBook(int id,EditBook eddto)
+        {
+            var valami = await _context.Books.FirstOrDefaultAsync(x => x.Id ==id) ;
+            if (valami != null) { 
+            valami.Author = eddto.Author;
+            valami.Price = eddto.Price;
+                valami.PublishedYear = eddto.PublishedYear;
+                valami.Genre = eddto.Genre;
+                valami.Title = eddto.Title;
+
+                _context.Books.Update(valami);
+                await _context.SaveChangesAsync();
+                return StatusCode(418, valami);
+            }
+            return BadRequest();
+            
         }
     }
 }
